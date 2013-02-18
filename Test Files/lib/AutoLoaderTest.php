@@ -31,6 +31,22 @@ class AutoLoaderTest extends PHPUnit_Framework_TestCase
 
     /**
      * @covers AutoLoader::registerDirectory
+     */
+    public function testRegisterDirectory_FilePassed()
+    {
+        try
+        {
+        $this->object->registerDirectory(__DIR__ . '/lib/Autoloader.class.php');
+        assert(FALSE);
+        }
+        catch (InvalidArgumentException $ex)
+        {
+            assert(TRUE);
+        }
+    }
+
+    /**
+     * @covers AutoLoader::registerDirectory
      * @todo   Implement testRegisterDirectory().
      */
     public function testRegisterDirectory()
@@ -40,7 +56,7 @@ class AutoLoaderTest extends PHPUnit_Framework_TestCase
                 'This test has not been implemented yet.'
         );
     }
-
+    
     /**
      * @covers AutoLoader::registerClass
      * @todo   Implement testRegisterClass().

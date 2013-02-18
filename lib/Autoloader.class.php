@@ -5,6 +5,8 @@
  */
 class AutoLoader
 {
+    const NOT_DIRECTORY = 1;
+    
     /**
      * Tableau interne stockant les classes connues de l’Autoloader
      * @var type 
@@ -14,9 +16,17 @@ class AutoLoader
     /**
      * Store the filename (sans extension) & full path of all "class.php" files found
      * @param string $dirName Le dossier à explorer pour enregistrer les classes
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionCode 1
      */
     public static function registerDirectory($dirName)
     {
+        // On vérifie que le chemin passé est bien un répertoire
+        if (!is_dir($dirName))
+        {
+            throw new InvalidArgumentException('Autoloader::registerDirectory : directory expected.', AutoLoader::NOT_DIRECTORY);
+        }
+        
         // On récupère un itérateur sur le dossier passé
         $directoryIterator = new DirectoryIterator($dirName);
         foreach ($directoryIterator as $file)
