@@ -107,4 +107,73 @@ class HttpRequestTest extends \PHPUnit_Framework_TestCase
     }
 
     // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="postExists">
+    /**
+     * @covers lib\core\HttpRequest::postExists
+     * expectedException InvalidArgumentException
+     * expectedExceptionCode lib\core\HttpRequest::CLE_VIDE
+     * expectedExceptionMessage someMessage
+     */
+    public function testPostExists_EmptyKey()
+    {
+        $this->setExpectedException('\InvalidArgumentException',
+                                    $this->reflectedObject->getShortName() . '::' . $this->reflectedObject->getMethod('postExists')->getName(),
+                                                                                                                      HttpRequest::CLE_VIDE);
+        $this->object->postExists('');
+    }
+
+    /**
+     * @covers lib\core\HttpRequest::postExists
+     */
+    public function testPostExists_NotExistingKey()
+    {
+        $this->assertFalse($this->object->postExists('a'));
+    }
+
+    /**
+     * @covers lib\core\HttpRequest::postExists
+     */
+    public function testPostExists_ExistingKey()
+    {
+        $_POST['a'] = '';
+        $this->assertTrue($this->object->postExists('a'));
+        unset($_POST['a']);
+    }
+
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="postData">
+    /**
+     * @covers lib\core\HttpRequest::postData
+     * @covers lib\core\HttpRequest::postExists
+     * expectedException InvalidArgumentException
+     * expectedExceptionCode lib\core\HttpRequest::CLE_VIDE
+     * expectedExceptionMessage someMessage
+     */
+    public function testPostData_EmptyKey()
+    {
+        $this->setExpectedException('\InvalidArgumentException',
+                                    $this->reflectedObject->getShortName() . '::' . $this->reflectedObject->getMethod('postExists')->getName(),
+                                                                                                                      HttpRequest::CLE_VIDE);
+        $this->object->postData('');
+    }
+
+    /**
+     * @covers lib\core\HttpRequest::postData
+     */
+    public function testPostData_NotExistingKey()
+    {
+        $this->assertNull($this->object->postData('a'));
+    }
+
+    /**
+     * @covers lib\core\HttpRequest::postData
+     */
+    public function testPostData_ExistingKey()
+    {
+        $_POST['a'] = '1';
+        $this->assertEquals($this->object->postData('a'), $_POST['a']);
+        unset($_POST['a']);
+    }
+
+    // </editor-fold>
 }
