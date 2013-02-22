@@ -3,7 +3,6 @@
 /**
  * @author alexandre
  */
-// Pour tous les tests, on charge l’Autoloader
-require_once(__DIR__ . '/../lib/Autoloader.class.php');
-AutoLoader::registerDirectory(__DIR__ . '/../..');
+// Pour tous les tests, on charge l’autoload
+require_once(__DIR__ . '/../autoload.php');
 ?>
