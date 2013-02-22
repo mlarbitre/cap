@@ -12,7 +12,7 @@ class HttpRequestTest extends \PHPUnit_Framework_TestCase
      * @var HttpRequest
      */
     protected $object;
-    
+
     /**
      * La réflection de l'objet de test
      * @var ReflectionClass 
@@ -25,7 +25,7 @@ class HttpRequestTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new HttpRequest;
+        $this->object          = new HttpRequest;
         $this->reflectedObject = new \ReflectionClass($this->object);
     }
 
@@ -38,6 +38,7 @@ class HttpRequestTest extends \PHPUnit_Framework_TestCase
         
     }
 
+    // <editor-fold defaultstate="collapsed" desc="getExists">
     /**
      * @covers lib\core\HttpRequest::getExists
      * expectedException InvalidArgumentException
@@ -47,8 +48,8 @@ class HttpRequestTest extends \PHPUnit_Framework_TestCase
     public function testGetExists_EmptyKey()
     {
         $this->setExpectedException('\InvalidArgumentException',
-                $this->reflectedObject->getShortName() . '::' . $this->reflectedObject->getMethod('getExists')->getName(),
-                HttpRequest::CLE_VIDE);
+                                    $this->reflectedObject->getShortName() . '::' . $this->reflectedObject->getMethod('getExists')->getName(),
+                                                                                                                      HttpRequest::CLE_VIDE);
         $this->object->getExists('');
     }
 
@@ -70,4 +71,40 @@ class HttpRequestTest extends \PHPUnit_Framework_TestCase
         unset($_GET['a']);
     }
 
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="getData">
+    /**
+     * @covers lib\core\HttpRequest::getData
+     * @covers lib\core\HttpRequest::getExists
+     * expectedException InvalidArgumentException
+     * expectedExceptionCode lib\core\HttpRequest::CLE_VIDE
+     * expectedExceptionMessage someMessage
+     */
+    public function testGetData_EmptyKey()
+    {
+        $this->setExpectedException('\InvalidArgumentException',
+                                    $this->reflectedObject->getShortName() . '::' . $this->reflectedObject->getMethod('getExists')->getName(),
+                                                                                                                      HttpRequest::CLE_VIDE);
+        $this->object->getData('');
+    }
+
+    /**
+     * @covers lib\core\HttpRequest::getData
+     */
+    public function testGetData_NotExistingKey()
+    {
+        $this->assertNull($this->object->getData('a'));
+    }
+
+    /**
+     * @covers lib\core\HttpRequest::getData
+     */
+    public function testGetData_ExistingKey()
+    {
+        $_GET['a'] = '1';
+        $this->assertEquals($this->object->getData('a'), $_GET['a']);
+        unset($_GET['a']);
+    }
+
+    // </editor-fold>
 }
