@@ -12,20 +12,20 @@ abstract class Application
 {
 
     /**
-     *
-     * @var \lib\core\HttpRequest La requête d'entrée 
+     * La requête d'entrée 
+     * @var \lib\core\HttpRequest
      */
     protected $httpRequest;
 
     /**
-     *
-     * @var \lib\core\HttpResponse La réponse à apporter 
+     * La réponse à apporter 
+     * @var \lib\core\HttpResponse
      */
     protected $httpResponse;
 
     /**
-     *
-     * @var string Le nom de l’application
+     * Le nom de l’application
+     * @var string
      */
     protected $name;
 
@@ -35,8 +35,8 @@ abstract class Application
      */
     public function __construct($name)
     {
-        $this->httpRequest  = new HTTPRequest;
-        $this->httpResponse = new HTTPResponse;
+        $this->httpRequest  = new HttpRequest;
+        $this->httpResponse = new HttpResponse;
         $this->name         = $name;
     }
 

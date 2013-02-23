@@ -33,12 +33,28 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     protected $object;
 
     /**
+     * @var \ReflectionClass 
+     */
+    private $reflectedHttpRequest;
+    
+    /**
+     * @var \ReflectionClass 
+     */
+    private $reflectedHttpResponse;
+    
+    /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
     protected function setUp()
     {
         $this->object = new TestApplication;
+        
+        $tempHttpRequest = new HttpRequest();
+        $this->reflectedHttpRequest = new \ReflectionClass($tempHttpRequest);
+        
+        $tempHttpResponse = new HttpResponse();
+        $this->reflectedHttpResponse = new \ReflectionClass($tempHttpResponse);
     }
 
     /**
@@ -50,4 +66,28 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         
     }
 
+    /**
+     * @covers \lib\core\Application::httpRequest
+     */
+    public function testHttpRequest()
+    {
+        $this->assertInstanceOf($this->reflectedHttpRequest->getName(), $this->object->httpRequest());
+    }
+    
+    /**
+     * @covers \lib\core\Application::httpResponse
+     */
+    public function testHttpResponse()
+    {
+        $this->assertInstanceOf($this->reflectedHttpResponse->getName(), $this->object->httpResponse());
+    }
+    
+    /**
+     * @covers \lib\core\Application::httpResponse
+     */
+    public function testName()
+    {
+        $this->assertEquals('test', $this->object->name());
+        $this->assertNotEquals('blabla', $this->object->name());
+    }
 }
