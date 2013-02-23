@@ -7,7 +7,7 @@ namespace lib\core;
  * Toutes les valeurs des propriétés de cette classe 
  * sont directement lues sur les variables globales 
  * serveur ($_POST, $_GET, $_SERVER…)
- * @author alexandre
+ * @author M. l’Arbitre
  */
 class HttpRequest
 {
