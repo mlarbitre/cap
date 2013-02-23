@@ -12,6 +12,7 @@ namespace lib\core;
 class HttpRequest
 {
     // Codes d'erreur
+
     const EMPTY_KEY      = 1; // Code d'erreur en cas de clé vide
     const ARRAY_EXPECTED = 2; // Code d'erreur en cas de tableau attendu non obtenu
 
@@ -22,6 +23,7 @@ class HttpRequest
      * @return bool TRUE si la valeur est définie, FALSE sinon
      * @throws \InvalidArgumentException
      */
+
     private function dataExists($key, $table)
     {
         if ($key == '')
@@ -113,6 +115,24 @@ class HttpRequest
     }
 
     // </editor-fold>
+    
+    /**
+     * 
+     * @return string La méthode (GET/POST) utilisée lors de la requete
+     */
+    public function requestMethod()
+    {
+        return $_SERVER['REQUEST_METHOD'];
+    }
+    
+    /**
+     * 
+     * @return string L'URL utilisée pour atteindre cette page
+     */
+    public function requestUri()
+    {
+        return $_SERVER['REQUEST_URI'];
+    }
 }
 
 ?>
