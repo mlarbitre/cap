@@ -41,20 +41,19 @@ class HttpRequestTest extends \PHPUnit_Framework_TestCase
     // <editor-fold defaultstate="collapsed" desc="getExists">
     /**
      * @covers lib\core\HttpRequest::getExists
-     * expectedException InvalidArgumentException
-     * expectedExceptionCode lib\core\HttpRequest::CLE_VIDE
-     * expectedExceptionMessage someMessage
+     * @covers lib\core\HttpRequest::dataExists
      */
     public function testGetExists_EmptyKey()
     {
         $this->setExpectedException('\InvalidArgumentException',
-                                    $this->reflectedObject->getShortName() . '::' . $this->reflectedObject->getMethod('getExists')->getName(),
-                                                                                                                      HttpRequest::CLE_VIDE);
+                                    $this->reflectedObject->getShortName() . '::' . $this->reflectedObject->getMethod('dataExists')->getName(),
+                                                                                                                      HttpRequest::EMPTY_KEY);
         $this->object->getExists('');
     }
 
     /**
      * @covers lib\core\HttpRequest::getExists
+     * @covers lib\core\HttpRequest::dataExists
      */
     public function testGetExists_NotExistingKey()
     {
@@ -63,6 +62,7 @@ class HttpRequestTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers lib\core\HttpRequest::getExists
+     * @covers lib\core\HttpRequest::dataExists
      */
     public function testGetExists_ExistingKey()
     {
@@ -76,20 +76,22 @@ class HttpRequestTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers lib\core\HttpRequest::getData
      * @covers lib\core\HttpRequest::getExists
-     * expectedException InvalidArgumentException
-     * expectedExceptionCode lib\core\HttpRequest::CLE_VIDE
-     * expectedExceptionMessage someMessage
+     * @covers lib\core\HttpRequest::data
+     * @covers lib\core\HttpRequest::dataExists
      */
     public function testGetData_EmptyKey()
     {
         $this->setExpectedException('\InvalidArgumentException',
-                                    $this->reflectedObject->getShortName() . '::' . $this->reflectedObject->getMethod('getExists')->getName(),
-                                                                                                                      HttpRequest::CLE_VIDE);
+                                    $this->reflectedObject->getShortName() . '::' . $this->reflectedObject->getMethod('dataExists')->getName(),
+                                                                                                                      HttpRequest::EMPTY_KEY);
         $this->object->getData('');
     }
 
     /**
      * @covers lib\core\HttpRequest::getData
+     * @covers lib\core\HttpRequest::getExists
+     * @covers lib\core\HttpRequest::data
+     * @covers lib\core\HttpRequest::dataExists
      */
     public function testGetData_NotExistingKey()
     {
@@ -98,6 +100,9 @@ class HttpRequestTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers lib\core\HttpRequest::getData
+     * @covers lib\core\HttpRequest::getExists
+     * @covers lib\core\HttpRequest::data
+     * @covers lib\core\HttpRequest::dataExists
      */
     public function testGetData_ExistingKey()
     {
@@ -110,20 +115,19 @@ class HttpRequestTest extends \PHPUnit_Framework_TestCase
     // <editor-fold defaultstate="collapsed" desc="postExists">
     /**
      * @covers lib\core\HttpRequest::postExists
-     * expectedException InvalidArgumentException
-     * expectedExceptionCode lib\core\HttpRequest::CLE_VIDE
-     * expectedExceptionMessage someMessage
+     * @covers lib\core\HttpRequest::dataExists
      */
     public function testPostExists_EmptyKey()
     {
         $this->setExpectedException('\InvalidArgumentException',
-                                    $this->reflectedObject->getShortName() . '::' . $this->reflectedObject->getMethod('postExists')->getName(),
-                                                                                                                      HttpRequest::CLE_VIDE);
+                                    $this->reflectedObject->getShortName() . '::' . $this->reflectedObject->getMethod('dataExists')->getName(),
+                                                                                                                      HttpRequest::EMPTY_KEY);
         $this->object->postExists('');
     }
 
     /**
      * @covers lib\core\HttpRequest::postExists
+     * @covers lib\core\HttpRequest::dataExists
      */
     public function testPostExists_NotExistingKey()
     {
@@ -132,6 +136,7 @@ class HttpRequestTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers lib\core\HttpRequest::postExists
+     * @covers lib\core\HttpRequest::dataExists
      */
     public function testPostExists_ExistingKey()
     {
@@ -145,20 +150,22 @@ class HttpRequestTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers lib\core\HttpRequest::postData
      * @covers lib\core\HttpRequest::postExists
-     * expectedException InvalidArgumentException
-     * expectedExceptionCode lib\core\HttpRequest::CLE_VIDE
-     * expectedExceptionMessage someMessage
+     * @covers lib\core\HttpRequest::data
+     * @covers lib\core\HttpRequest::dataExists
      */
     public function testPostData_EmptyKey()
     {
         $this->setExpectedException('\InvalidArgumentException',
-                                    $this->reflectedObject->getShortName() . '::' . $this->reflectedObject->getMethod('postExists')->getName(),
-                                                                                                                      HttpRequest::CLE_VIDE);
+                                    $this->reflectedObject->getShortName() . '::' . $this->reflectedObject->getMethod('dataExists')->getName(),
+                                                                                                                      HttpRequest::EMPTY_KEY);
         $this->object->postData('');
     }
 
     /**
      * @covers lib\core\HttpRequest::postData
+     * @covers lib\core\HttpRequest::postExists
+     * @covers lib\core\HttpRequest::data
+     * @covers lib\core\HttpRequest::dataExists
      */
     public function testPostData_NotExistingKey()
     {
@@ -167,12 +174,89 @@ class HttpRequestTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers lib\core\HttpRequest::postData
+     * @covers lib\core\HttpRequest::postExists
+     * @covers lib\core\HttpRequest::data
+     * @covers lib\core\HttpRequest::dataExists
      */
     public function testPostData_ExistingKey()
     {
         $_POST['a'] = '1';
         $this->assertEquals($this->object->postData('a'), $_POST['a']);
         unset($_POST['a']);
+    }
+
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="cookieExists">
+    /**
+     * @covers lib\core\HttpRequest::cookieExists
+     * @covers lib\core\HttpRequest::dataExists
+     */
+    public function testCookieExists_EmptyKey()
+    {
+        $this->setExpectedException('\InvalidArgumentException',
+                                    $this->reflectedObject->getShortName() . '::' . $this->reflectedObject->getMethod('dataExists')->getName(),
+                                                                                                                      HttpRequest::EMPTY_KEY);
+        $this->object->cookieExists('');
+    }
+
+    /**
+     * @covers lib\core\HttpRequest::cookieExists
+     * @covers lib\core\HttpRequest::dataExists
+     */
+    public function testCookieExists_NotExistingKey()
+    {
+        $this->assertFalse($this->object->cookieExists('a'));
+    }
+
+    /**
+     * @covers lib\core\HttpRequest::cookieExists
+     * @covers lib\core\HttpRequest::dataExists
+     */
+    public function testCookieExists_ExistingKey()
+    {
+        $_COOKIE['a'] = '';
+        $this->assertTrue($this->object->cookieExists('a'));
+        unset($_COOKIE['a']);
+    }
+
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="cookieData">
+    /**
+     * @covers lib\core\HttpRequest::cookieData
+     * @covers lib\core\HttpRequest::cookieExists
+     * @covers lib\core\HttpRequest::data
+     * @covers lib\core\HttpRequest::dataExists
+     */
+    public function testCookieData_EmptyKey()
+    {
+        $this->setExpectedException('\InvalidArgumentException',
+                                    $this->reflectedObject->getShortName() . '::' . $this->reflectedObject->getMethod('dataExists')->getName(),
+                                                                                                                      HttpRequest::EMPTY_KEY);
+        $this->object->cookieData('');
+    }
+
+    /**
+     * @covers lib\core\HttpRequest::cookieData
+     * @covers lib\core\HttpRequest::cookieExists
+     * @covers lib\core\HttpRequest::data
+     * @covers lib\core\HttpRequest::dataExists
+     */
+    public function testCookieData_NotExistingKey()
+    {
+        $this->assertNull($this->object->cookieData('a'));
+    }
+
+    /**
+     * @covers lib\core\HttpRequest::cookieData
+     * @covers lib\core\HttpRequest::cookieExists
+     * @covers lib\core\HttpRequest::data
+     * @covers lib\core\HttpRequest::dataExists
+     */
+    public function testCookieData_ExistingKey()
+    {
+        $_COOKIE['a'] = '1';
+        $this->assertEquals($this->object->cookieData('a'), $_COOKIE['a']);
+        unset($_COOKIE['a']);
     }
 
     // </editor-fold>
