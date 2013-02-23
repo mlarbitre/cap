@@ -10,8 +10,8 @@ namespace lib\core;
 class HttpResponse
 {
     /**
-     * 
-     * @var \lib\core\Page La page en réponse à la requête initiale
+     * La page en réponse à la requête initiale
+     * @var \lib\core\Page
      */
     protected $page;
 
