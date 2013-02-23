@@ -9,7 +9,7 @@ namespace lib\core;
  * serveur ($_POST, $_GET, $_SERVER…)
  * @author M. l’Arbitre
  */
-class HttpRequest
+class HttpRequest extends ApplicationComponent
 {
     // Codes d'erreur
 

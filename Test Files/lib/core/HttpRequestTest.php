@@ -25,7 +25,8 @@ class HttpRequestTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object          = new HttpRequest;
+        $testApp = new \test\TestApplication;
+        $this->object          = new HttpRequest($testApp);
         $this->reflectedObject = new \ReflectionClass($this->object);
     }
 

@@ -7,8 +7,9 @@ namespace lib\core;
  * Permet la redirection, l’ajout de "header" et l’envoi d’une page html en réponse.
  * @author M. l’Arbitre
  */
-class HttpResponse
+class HttpResponse extends ApplicationComponent
 {
+
     /**
      * La page en réponse à la requête initiale
      * @var \lib\core\Page
@@ -27,11 +28,27 @@ class HttpResponse
     /**
      * Permet de renvoyer vers une autre URL
      * @param string $location L’URL de redirection
+     * @param int $time Le temps en secondes avant la redirection
      */
-    public function redirect($location)
+    public function redirect($location, $time = 0)
     {
-        header('Location: ' . $location);
-        exit;
+        //On vérifie si aucun en-tête n'a déjà été envoyé    
+        if (!headers_sent())
+        {
+            if ($time === 0)
+            {
+                header('Location: ' . $location);
+            }
+            else
+            {
+                header("refresh: $time;url=$location");    
+            }
+            exit;
+        }
+        else
+        {
+            exit('<meta http-equiv="refresh" content="' . $time . ';url=' . $location . '"/>');
+        }
     }
 
     /**
