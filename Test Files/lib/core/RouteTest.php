@@ -19,7 +19,7 @@ class RouteTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        
+        $this->object = new Route('/news-(.+)-([0-9]+)\.html', 'news', 'view', array('nom', 'id'));
     }
 
     /**
@@ -88,5 +88,37 @@ class RouteTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('205', $matches);
     }
 
-    // </editor-fold>fold
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="__construct">
+
+    /**
+     * @covers lib\core\Route::__construct
+     * @covers lib\core\Route::module
+     */
+    public function testModule()
+    {
+        $this->assertEquals('news', $this->object->module());
+    }
+    
+    /**
+     * @covers lib\core\Route::__construct
+     * @covers lib\core\Route::action
+     */
+    public function testAction()
+    {
+        $this->assertEquals('view', $this->object->action());
+    }
+
+    /**
+     * @covers lib\core\Route::__construct
+     * @covers lib\core\Route::varsNames
+     */
+    public function testVarsNames()
+    {
+        $this->assertTrue(is_array($this->object->varsNames()));
+        $this->assertContains('nom', $this->object->varsNames());
+        $this->assertContains('id', $this->object->varsNames());
+    }
+    
+    // </editor-fold>
 }

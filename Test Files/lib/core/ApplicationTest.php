@@ -49,6 +49,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \lib\core\Application::httpRequest
+     * @covers \lib\core\Application::__construct
      */
     public function testHttpRequest()
     {
@@ -57,6 +58,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     
     /**
      * @covers \lib\core\Application::httpResponse
+     * @covers \lib\core\Application::__construct
      */
     public function testHttpResponse()
     {
@@ -64,7 +66,8 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @covers \lib\core\Application::httpResponse
+     * @covers \lib\core\Application::name
+     * @covers \lib\core\Application::__construct
      */
     public function testName()
     {
