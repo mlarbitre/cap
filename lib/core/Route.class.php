@@ -121,6 +121,15 @@ class Route
         return $this->varsNames;
     }
 
+    /**
+     * Setter du tableau de variables
+     * @param array $vars Le tableau des variables à affecter
+     */
+    public function setVars(array $vars)
+    {
+        $this->vars = $vars;
+    }
+
 }
 
 ?>
