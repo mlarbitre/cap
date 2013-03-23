@@ -111,8 +111,9 @@ abstract class Controller extends ApplicationComponent
             throw new \InvalidArgumentException("Controller::setAction : $view is not a valid argument", self::BAD_VIEW);
         }
         $this->view   = $view;
-        // Il faut également informé la Page que la vue a changé
-        // Attention, la page attend le nom complet de la vue
+        // Il faut également informer la Page que la vue a changé
+        // Seul le controller sait dans quel module il se trouve et donc 
+        // le chemin complet de la vue que la page doit utiliser.
         $viewFileName =
                 // TODO : remplacer __DIR__ . "../.." par la racine du projet
                 __DIR__ . "../.." . "/Applications/" . $this->app->name() . '/modules/' . $this->module . '/views/' . $this->view;
