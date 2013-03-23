@@ -43,7 +43,7 @@ class Page extends ApplicationComponent
 
     /**
      * Définit la vue à utiliser pour générer la page
-     * @param string $view Le nom du fichier à utiliser
+     * @param string $view Le nom complet du fichier à utiliser
      * @throws \InvalidArgumentException
      */
     public function setView($view)
