@@ -41,7 +41,7 @@ class HttpResponse extends ApplicationComponent
             }
             else
             {
-                header("refresh: $time;url=$location");    
+                header("refresh: $time;url=$location");
             }
             exit;
         }
@@ -52,12 +52,21 @@ class HttpResponse extends ApplicationComponent
     }
 
     /**
-     * Permet de renvoyer vers une page d'erreur 404
-     * @todo Implémenter la méthode pour page 404
+     * Permet de renvoyer vers une page d'erreur 404.
+     * Le fichier correspondant à la vue est attendu dans
+     * un dossier "errors" en racine de projet, et doit
+     * être nommé "404.html".
      */
     public function redirect404()
     {
-        throw new \Exception;
+        // On crée une nouvelle page de réponse
+        $this->page = new Page($this->app);
+        // On lui affecte la vue 404.html
+        $this->page->setView(__DIR__ . '../../errors/404.html');
+        // On ajoute un header pour signaler l'erreur 404
+        $this->addHeader('HTTP/1.0 404 Not Found');
+        // On envoie la réponse
+        $this->send();
     }
 
     /**

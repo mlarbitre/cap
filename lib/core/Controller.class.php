@@ -63,6 +63,7 @@ abstract class Controller extends ApplicationComponent
      * Exécute la méthode correspondante à l'action souhaitée,
      * méthode nommée par convention "executeAction".
      * La requête HTTP est passée en paramètre à la méthode.
+     * @throws \RuntimeException
      */
     public function execute()
     {
@@ -77,6 +78,7 @@ abstract class Controller extends ApplicationComponent
     /**
      * Setter du module
      * @param string $module Le nom du module
+     * @throws \InvalidArgumentException
      */
     private function setModule($module)
     {
@@ -90,6 +92,7 @@ abstract class Controller extends ApplicationComponent
     /**
      * Setter de l'action
      * @param string $action Le nom de l'action
+     * @throws \InvalidArgumentException
      */
     private function setAction($action)
     {
@@ -103,6 +106,7 @@ abstract class Controller extends ApplicationComponent
     /**
      * Setter de la vue
      * @param string $view Nom du fichier de la vue
+     * @throws \InvalidArgumentException
      */
     public function setView($view)
     {

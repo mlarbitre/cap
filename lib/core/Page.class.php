@@ -30,6 +30,7 @@ class Page extends ApplicationComponent
      * Ajoute une donnée pour la vue
      * @param string $key La clé de la donnée
      * @param mixed $value La valeur de la donnée
+     * @throws \InvalidArgumentException
      */
     public function addVar($key, $value)
     {
@@ -57,7 +58,8 @@ class Page extends ApplicationComponent
     }
 
     /**
-     * Génère et retourne la page html à afficher
+     * Génère et retourne la page html à afficher.
+     * Le layout utilisé doit utiliser la variable $content
      * @return string La page html générée
      * @throws \RuntimeException
      */
