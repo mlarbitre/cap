@@ -9,6 +9,9 @@ namespace test;
 
 // Pour tous les tests, on charge l’autoload
 require_once(__DIR__ . '/../autoload.php');
+// et on ajoute l'autoload Composer
+// pour l'utilisation de VfsStream
+require_once(__DIR__ .  '/vendor/autoload.php');
 
 // Pour tous les tests, on déclare une classe TestApplication
 /**
