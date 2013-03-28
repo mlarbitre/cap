@@ -25,7 +25,10 @@ class TestApplication extends \lib\core\Application
      */
     public function __construct()
     {
-        parent::__construct('test');
+        $name = 'test';
+        $routeFileName = __DIR__ . "/../../" . "apps/$name/config/routes.xml";
+        $routesProvider = new \lib\XmlRoutesProvider($routeFileName);
+        parent::__construct($name, $routesProvider, $routeFileName);
     }
 
     /**

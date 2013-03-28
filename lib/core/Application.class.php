@@ -30,14 +30,37 @@ abstract class Application
     protected $name;
 
     /**
+     * Un fournisseur de routes valides
+     * @var lib\core\IRoutesProvider 
+     */
+    protected $routesProvider;
+
+    /**
+     * Le nom complet du fichier des routes valides
+     * @var string 
+     */
+    protected $routesFileFullName;
+
+    /**
      * Constructeur d’instance
      * @param string $name Le nom de l’application
+     * @param lib\core\IRoutesProvider $routesProvider Un fournisseur de routes
      */
-    public function __construct($name)
+    public function __construct($name, IRoutesProvider $routesProvider,
+                                $routesFileName = '')
     {
-        $this->httpRequest  = new HttpRequest($this);
-        $this->httpResponse = new HttpResponse($this);
-        $this->name         = $name;
+        $this->httpRequest    = new HttpRequest($this);
+        $this->httpResponse   = new HttpResponse($this);
+        $this->name           = $name;
+        $this->routesProvider = $routesProvider;
+
+        if (empty($routesFileName) || !is_string($routesFileName))
+        {
+            // Par défaut, on suppose que le chemin d'accès aux routes
+            // est dans un dossier "config" dans le répertoire de l'appli
+            $routesFileName = __DIR__ . "/../../"
+                    . "apps/$this->name/config/routes.xml";
+        }
     }
 
     /**
@@ -72,6 +95,15 @@ abstract class Application
     public function name()
     {
         return $this->name;
+    }
+
+    /**
+     * Obtient le controller à utiliser pour répondre à la requête
+     * @return \lib\core\Controller Le controller attendu
+     */
+    public function getController()
+    {
+        
     }
 
 }
