@@ -44,23 +44,14 @@ abstract class Application
     /**
      * Constructeur d’instance
      * @param string $name Le nom de l’application
-     * @param lib\core\IRoutesProvider $routesProvider Un fournisseur de routes
+     * @param \lib\core\IRoutesProvider $routesProvider Un fournisseur de routes
      */
-    public function __construct($name, IRoutesProvider $routesProvider,
-                                $routesFileName = '')
+    public function __construct($name, IRoutesProvider $routesProvider)
     {
         $this->httpRequest    = new HttpRequest($this);
         $this->httpResponse   = new HttpResponse($this);
         $this->name           = $name;
         $this->routesProvider = $routesProvider;
-
-        if (empty($routesFileName) || !is_string($routesFileName))
-        {
-            // Par défaut, on suppose que le chemin d'accès aux routes
-            // est dans un dossier "config" dans le répertoire de l'appli
-            $routesFileName = __DIR__ . "/../../"
-                    . "apps/$this->name/config/routes.xml";
-        }
     }
 
     /**
@@ -103,7 +94,45 @@ abstract class Application
      */
     public function getController()
     {
-        
+        // On instancie un router
+        /* @var $router \lib\core\Router */
+        $router = new Router();
+        // On lui donne la liste des routes disponibles
+        $router->addRoutes($this->routesProvider->getAvailableRoutes());
+        try
+        {
+            // On essaie de trouver une équivalence à la requête
+            /* @var $matchedRoute \lib\core\Route */
+            $matchedRoute = $router->getRoute($this->httpRequest->requestUri());
+        }
+        catch (\RuntimeException $ex)
+        {
+            // Si le router n'a pas trouvé de route correspondante…
+            if ($ex->getCode == Router::NO_ROUTE)
+            {
+                // … on envoie sur la 404
+                $this->httpResponse->redirect404();
+            }
+            else
+            {
+                // On transmet simplement l'exception
+                throw $ex;
+            }
+        }
+
+        // On a la route, avec dans son tableau "vars" les
+        // valeurs entrées dans l'url.
+        // Il faut donc les mettre sur la variable globale $_GET
+        $_GET = array_merge($_GET, $matchedRoute->vars());
+
+        // Reste à instancier le controller, en choisissant son type.
+        // Par convention, le controller est de type "ModuleController"
+        $controllerType = '\\apps\\' . strtolower($this->name) .
+                '\\modules\\' . strtolower($matchedRoute->module()) .
+                ucfirst($matchedRoute->module()) . 'Controller';
+
+        return new $controllerType($this, $matchedRoute->module(),
+                        $matchedRoute->action());
     }
 
 }

@@ -12,6 +12,7 @@ interface IRoutesProvider
     /**
      * Fournit la liste des routes acceptables pour l'application
      * @return array Le tableau des routes disponibles pour l'application
+     * @throws \RuntimeException 
      */
     function getAvailableRoutes();
 }
