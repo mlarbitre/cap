@@ -36,12 +36,6 @@ abstract class Application
     protected $routesProvider;
 
     /**
-     * Le nom complet du fichier des routes valides
-     * @var string 
-     */
-    protected $routesFileFullName;
-
-    /**
      * Constructeur d’instance
      * @param string $name Le nom de l’application
      * @param \lib\core\IRoutesProvider $routesProvider Un fournisseur de routes
