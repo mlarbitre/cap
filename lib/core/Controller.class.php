@@ -120,7 +120,7 @@ abstract class Controller extends ApplicationComponent
         // le chemin complet de la vue que la page doit utiliser.
         $viewFileName =
                 // TODO : remplacer __DIR__ . "../.." par la racine du projet
-                __DIR__ . "../.." . "/Applications/" . $this->app->name() . '/modules/' . $this->module . '/views/' . $this->view;
+                __DIR__ . "../.." . "/apps/" . $this->app->name() . '/modules/' . $this->module . '/views/' . $this->view;
         $this->page->setView($viewFileName);
     }
 

@@ -81,7 +81,7 @@ class Page extends ApplicationComponent
         // Le layout doit contenir une variable $content,
         // et être stocké dans le répertoire templates de l'application
         ob_start();
-        require __DIR__ . '/../Applications/' . $this->app->name() . '/templates/layout.php';
+        require __DIR__ . '/../..' . '/apps/' . $this->app->name() . '/templates/layout.php';
         return ob_get_clean();
     }
 
