@@ -31,21 +31,35 @@ abstract class Application
 
     /**
      * Un fournisseur de routes valides
-     * @var lib\core\IRoutesProvider 
+     * @var \lib\core\IRoutesProvider 
      */
     protected $routesProvider;
+
+    /**
+     * La configuration de l'application
+     * @var \lib\core\Config
+     */
+    protected $config;
 
     /**
      * Constructeur d’instance
      * @param string $name Le nom de l’application
      * @param \lib\core\IRoutesProvider $routesProvider Un fournisseur de routes
+     * @param string $configFile Le chemin complet du fichier de configuration de l'application.
+     * Par défaut, l'application cherche un fichier "app.xml" dans un sous-répertoire "config"
      */
-    public function __construct($name, IRoutesProvider $routesProvider)
+    public function __construct($name, IRoutesProvider $routesProvider,
+            $configFile='')
     {
         $this->httpRequest    = new HttpRequest($this);
         $this->httpResponse   = new HttpResponse($this);
         $this->name           = $name;
         $this->routesProvider = $routesProvider;
+        if ($configFile === '')
+        {
+            $configFile = __DIR__ . '/../..' . '/apps/' . $this->name . '/config/app.xml';
+        }
+        $this->config = new Config($this, $configFile);
     }
 
     /**
@@ -80,6 +94,15 @@ abstract class Application
     public function name()
     {
         return $this->name;
+    }
+    
+    /**
+     * Getter de la configuration de l'application
+     * @return \lib\core\Config La configuration de l’application
+     */
+    public function config()
+    {
+        return $this->config;
     }
 
     /**

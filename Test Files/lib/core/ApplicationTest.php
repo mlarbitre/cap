@@ -17,12 +17,17 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
      * @var \ReflectionClass 
      */
     private $reflectedHttpRequest;
-    
+
     /**
      * @var \ReflectionClass 
      */
     private $reflectedHttpResponse;
-    
+
+    /**
+     * @var \ReflectionClass 
+     */
+    private $reflectedConfig;
+
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
@@ -30,12 +35,15 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = new \test\TestApplication;
-        
-        $tempHttpRequest = new HttpRequest($this->object);
+
+        $tempHttpRequest            = new HttpRequest($this->object);
         $this->reflectedHttpRequest = new \ReflectionClass($tempHttpRequest);
-        
-        $tempHttpResponse = new HttpResponse($this->object);
+
+        $tempHttpResponse            = new HttpResponse($this->object);
         $this->reflectedHttpResponse = new \ReflectionClass($tempHttpResponse);
+
+        $tempConfig            = new Config($this->object);
+        $this->reflectedConfig = new \ReflectionClass($tempConfig);
     }
 
     /**
@@ -53,18 +61,20 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
      */
     public function testHttpRequest()
     {
-        $this->assertInstanceOf($this->reflectedHttpRequest->getName(), $this->object->httpRequest());
+        $this->assertInstanceOf($this->reflectedHttpRequest->getName(),
+                                $this->object->httpRequest());
     }
-    
+
     /**
      * @covers \lib\core\Application::httpResponse
      * @covers \lib\core\Application::__construct
      */
     public function testHttpResponse()
     {
-        $this->assertInstanceOf($this->reflectedHttpResponse->getName(), $this->object->httpResponse());
+        $this->assertInstanceOf($this->reflectedHttpResponse->getName(),
+                                $this->object->httpResponse());
     }
-    
+
     /**
      * @covers \lib\core\Application::name
      * @covers \lib\core\Application::__construct
@@ -74,4 +84,42 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('test', $this->object->name());
         $this->assertNotEquals('blabla', $this->object->name());
     }
+
+    /**
+     * @covers \lib\core\Application::config
+     * @covers \lib\core\Application::__construct
+     */
+    public function testConfig()
+    {
+        $this->assertInstanceOf($this->reflectedConfig->getName(),
+                                $this->object->config());
+    }
+
+    /**
+     * @covers \lib\core\Application::__construct
+     */
+    public function testConstruct_NoConfigFileSpecified()
+    {
+        // On mocke la classe abstraite "Application"
+        $mockIRoutesProvider = $this->getMock('\lib\core\IRoutesProvider');
+        /* @var $mockApp \lib\core\Application */
+        $mockApp             = $this->getMockForAbstractClass('\lib\core\Application',
+                                                              array('appName', $mockIRoutesProvider),
+                                                              'MockApp');
+        // Deux petits tests pour le plaisir de vérifier qu'on a bien compris le Mock.
+        $this->assertInstanceOf('MockApp', $mockApp);
+        $this->assertEquals('appName', $mockApp->name());
+
+        // Modification du chemin de "base" de l'application
+        $testFiles           = '/Test Files';
+        $cheminSansTestFiles =
+                str_replace($testFiles, '', __DIR__);
+        
+        // Test à proprement parlé de la mise en place par le
+        // constructeur d'Application d'un chemin par défaut
+        // pour le fichier de configuration.
+        $this->assertAttributeEquals($cheminSansTestFiles . '/../../apps/appName/config/app.xml',
+                                     'configFileName', $mockApp->config());
+    }
+
 }
